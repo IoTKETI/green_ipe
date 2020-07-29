@@ -324,3 +324,13 @@ exports.crtci = function(parent, count, content, callback) {
     });
 };
 
+exports.delci = function(target, count, callback) {
+    http_request(target, 'delete', '', '', function (rsc, res_body) {
+        if(rsc == 9999) {
+            callback(rsc, res_body);
+        }
+        else {
+            callback(rsc, res_body, count);
+        }
+    });
+};
