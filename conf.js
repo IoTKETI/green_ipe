@@ -29,7 +29,7 @@ conf.useprotocol = 'http'; // select one for 'http' or 'mqtt' or 'coap' or 'ws'
 
 
 conf.sim = 'disable'; // enable / disable
-conf.use_subscription = 'enable';
+
 
 
 
@@ -95,14 +95,15 @@ global.build_cnt_dynamic = function(callback) {
     conf['next_red-edge_m_cnt'] = conf.next_month_cnt + '-red-edge';
     conf['next_red-edge_d_cnt'] = conf.next_day_cnt + '-red-edge';
 
+    for(var l in pontoon_list) {
+        if(pontoon_list.hasOwnProperty(l)) {
+            build_resource_for_pontoon(pontoon_list[l]);
+        }
+    }
+
     callback();
 };
 
-
-build_cnt_dynamic(function () {
-    console.log('======== day_cont: ' + conf.day_cnt);
-    console.log('======== next_day_cont: ' + conf.next_day_cnt);
-});
 
 var pontoon_list = ['pontoon_titania', 'pontoon_mimas'];
 var dataset_list_idx = {};
@@ -115,7 +116,8 @@ var sub_count = 0;
 // cin.con['DAT00'] = '20200710200000';
 // var ref_ct = moment(cin.con['DAT00'],'YYYYMMDDHHmmss').subtract(10, 'minutes').format('YYYY-MM-DD HH:mm:ss');
 
-var sub_resource_name = 'jiho_sub';
+conf.use_subscription = 'enable';
+var sub_resource_name = 'ryeubi_sub';
 conf.aei_for_sub = require('shortid').generate();
 
 function build_resource_for_pontoon(pontoon_name) {
@@ -427,11 +429,15 @@ function build_resource_for_pontoon(pontoon_name) {
     }
 }
 
+build_cnt_dynamic(function () {
+    console.log('======== day_cont: ' + conf.day_cnt);
+    console.log('======== next_day_cont: ' + conf.next_day_cnt);
+});
+
+
 var dataset_list = {};
 for(var l in pontoon_list) {
     if(pontoon_list.hasOwnProperty(l)) {
-        build_resource_for_pontoon(pontoon_list[l]);
-
         dataset_list[pontoon_list[l]] = [];
         for(var tt = 0; tt < 50; tt++) {
             dataset_list[pontoon_list[l]].push('0');
