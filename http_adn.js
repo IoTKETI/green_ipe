@@ -23,7 +23,7 @@ function http_request(path, method, ty, bodyString, callback) {
         var origin = 'Superman';
     }
     else {
-        origin = 'Sjiho';
+        origin = conf.ae.id; //'Sjiho';
     }
 
     var options = {

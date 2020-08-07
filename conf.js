@@ -95,6 +95,9 @@ global.build_cnt_dynamic = function(callback) {
     conf['next_red-edge_m_cnt'] = conf.next_month_cnt + '-red-edge';
     conf['next_red-edge_d_cnt'] = conf.next_day_cnt + '-red-edge';
 
+
+    cnt_count = 0;
+    sub_count = 0;
     for(var l in pontoon_list) {
         if(pontoon_list.hasOwnProperty(l)) {
             build_resource_for_pontoon(pontoon_list[l]);

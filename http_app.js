@@ -327,42 +327,42 @@ function mqtt_connect(serverip, noti_topic) {
         }
 
         mqtt_client = mqtt.connect(connectOptions);
+
+        mqtt_client.on('connect', function () {
+            mqtt_client.subscribe(noti_topic);
+            console.log('[mqtt_connect] noti_topic : ' + noti_topic);
+        });
+
+        mqtt_client.on('message', function (topic, message) {
+
+            var topic_arr = topic.split("/");
+
+            var bodytype = conf.ae.bodytype;
+            if(topic_arr[5] != null) {
+                bodytype = (topic_arr[5] === 'xml') ? topic_arr[5] : ((topic_arr[5] === 'json') ? topic_arr[5] : ((topic_arr[5] === 'cbor') ? topic_arr[5] : 'json'));
+            }
+
+            if(topic_arr[1] === 'oneM2M' && topic_arr[2] === 'req' && topic_arr[4] === conf.aei_for_sub) {
+                //console.log(message.toString());
+                if(bodytype === 'xml') {
+                }
+                else if(bodytype === 'cbor') {
+                }
+                else { // json
+                    var jsonObj = JSON.parse(message.toString());
+
+                    setTimeout(on_message_onem2m, 1, jsonObj, topic_arr);
+                }
+            }
+            else {
+                console.log('topic is not supported');
+            }
+        });
+
+        mqtt_client.on('error', function (err) {
+            console.log(err.message);
+        });
     }
-
-    mqtt_client.on('connect', function () {
-        mqtt_client.subscribe(noti_topic);
-        console.log('[mqtt_connect] noti_topic : ' + noti_topic);
-    });
-
-    mqtt_client.on('message', function (topic, message) {
-
-        var topic_arr = topic.split("/");
-
-        var bodytype = conf.ae.bodytype;
-        if(topic_arr[5] != null) {
-            bodytype = (topic_arr[5] === 'xml') ? topic_arr[5] : ((topic_arr[5] === 'json') ? topic_arr[5] : ((topic_arr[5] === 'cbor') ? topic_arr[5] : 'json'));
-        }
-
-        if(topic_arr[1] === 'oneM2M' && topic_arr[2] === 'req' && topic_arr[4] === conf.aei_for_sub) {
-            //console.log(message.toString());
-            if(bodytype === 'xml') {
-            }
-            else if(bodytype === 'cbor') {
-            }
-            else { // json
-                var jsonObj = JSON.parse(message.toString());
-
-                setTimeout(on_message_onem2m, 1, jsonObj, topic_arr);
-            }
-        }
-        else {
-            console.log('topic is not supported');
-        }
-    });
-
-    mqtt_client.on('error', function (err) {
-        console.log(err.message);
-    });
 }
 
 function on_message_onem2m(jsonObj, topic_arr) {
