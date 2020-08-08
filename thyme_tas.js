@@ -373,27 +373,31 @@ function get_main_color(img_data, file_name, pontoon_name, cin_ctname, callback)
             console.log('Error code: '+error.code);
             console.log('Signal received: '+error.signal);
 
-            callback();
-            return;
+            //callback();
+            ///return;
         }
-        //console.log('Child Process STDOUT: '+stdout);
-        //console.log('Child Process STDERR: '+stderr);
+        else {
+            //console.log('Child Process STDOUT: '+stdout);
+            //console.log('Child Process STDERR: '+stderr);
 
-        console.log("======== [get_main_color] - [" + pontoon_name + "] - [" + cin_ctname + "] ========");
+            console.log("======== [get_main_color] - [" + pontoon_name + "] - [" + cin_ctname + "] ========");
 
-        //데이터셋 이미지 결과 넣기
-        var colorresult_arr = stdout.replace('[[','').replace(']]','').split(' ');
-        conf.dataset_list[pontoon_name][dataset_index[cin_ctname]] = (parseInt(colorresult_arr[0],10)/255).toString();
+            //데이터셋 이미지 결과 넣기
+            var colorresult_arr = stdout.replace('[[', '').replace(']]', '').split(' ');
+            conf.dataset_list[pontoon_name][dataset_index[cin_ctname]] = (parseInt(colorresult_arr[0], 10) / 255).toString();
 
-        console.log("======== [get_main_color] - [result] - [" + conf.dataset_list[pontoon_name][dataset_index[cin_ctname]] + "] ========\n\r");
+            console.log("======== [get_main_color] - [result] - [" + conf.dataset_list[pontoon_name][dataset_index[cin_ctname]] + "] ========\n\r");
 
-        im_flag += (2^(dataset_index[cin_ctname] - 41) - 1);
+            im_flag += (2 ^ (dataset_index[cin_ctname] - 41) - 1);
 
-        callback();
+            //callback();
+        }
     });
 
     ls.on('exit', function (code) {
         console.log('Child process exited with exit code '+code);
+
+        callback();
     });
 }
 
@@ -452,5 +456,8 @@ function check_camera_images(pontoon_name, index, ref_ct, callback) {
                 callback(200);
             }
         });
+    }
+    else {
+        callback(200);
     }
 }
