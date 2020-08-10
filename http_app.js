@@ -255,9 +255,13 @@ function http_watchdog() {
                 if (conf.sub.length <= count) {
                     sh_state = 'crtci';
 
-                    ready_for_notification();
+                    if(MQTT_SUBSCRIPTION_ENABLE == 1) {
+                        ready_for_notification();
 
-                    tas.ready();
+                        tas.ready();
+
+                        MQTT_SUBSCRIPTION_ENABLE = 2;
+                    }
 
                     setTimeout(http_watchdog, 100);
                 }
