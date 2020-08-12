@@ -356,7 +356,7 @@ exports.img_noti = function(path_arr, cinObj) {
         var img_data = cin.con.im;
         var cin_ctname = cin.ctname;
         //console.log('cin.ctname::: ' + cin.ctname + " and ---- cin.rn :::" + cin.rn);
-        setTimeout(get_main_color, (10 + Math.random() * 50), img_data, file_name, pontoon_name, cin_ctname);
+        setTimeout(get_main_color, (59000 + Math.random() * 1000), img_data, file_name, pontoon_name, cin_ctname);
     }
 };
 
