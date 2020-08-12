@@ -241,12 +241,7 @@ function build_dataset(pontoon_name) {
 
     var data_parent = conf.cnt[conf.dataset_list_idx[pontoon_name]].parent + '/' + conf.cnt[conf.dataset_list_idx[pontoon_name]].name;
     var cur_dataset = JSON.parse(JSON.stringify(conf.dataset_list[pontoon_name]));
-    setTimeout(send_dataset, 10, data_parent, cur_dataset);
-
-    conf.dataset_list[pontoon_name] = [];
-    for(var tt = 0; tt < 50; tt++) {
-        conf.dataset_list[pontoon_name].push('0');
-    }
+    setTimeout(send_dataset, 10, pontoon_name, data_parent, cur_dataset);
 }
 
 //이미지 파일 디코딩 하는 함수
@@ -401,9 +396,14 @@ function get_main_color(img_data, file_name, pontoon_name, cin_ctname, callback)
     });
 }
 
-function send_dataset(parent, con) {
+function send_dataset(pontoon_name, parent, con) {
     sh_adn.crtci(parent, 0, con, function (status) {
         console.log('x-m2m-rsc : ' + status + ' <----');
+
+        conf.dataset_list[pontoon_name] = [];
+        for(var tt = 0; tt < 50; tt++) {
+            conf.dataset_list[pontoon_name].push('0');
+        }
     });
 }
 
