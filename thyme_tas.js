@@ -241,7 +241,7 @@ function build_dataset(pontoon_name) {
 
     var data_parent = conf.cnt[conf.dataset_list_idx[pontoon_name]].parent + '/' + conf.cnt[conf.dataset_list_idx[pontoon_name]].name;
     var cur_dataset = JSON.parse(JSON.stringify(conf.dataset_list[pontoon_name]));
-    setTimeout(send_dataset, 10, pontoon_name, data_parent, cur_dataset);
+    setTimeout(send_dataset, 10000, pontoon_name, data_parent, cur_dataset);
 }
 
 //이미지 파일 디코딩 하는 함수
