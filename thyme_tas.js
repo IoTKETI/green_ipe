@@ -241,7 +241,7 @@ function build_dataset(pontoon_name) {
 
     var data_parent = conf.cnt[conf.dataset_list_idx[pontoon_name]].parent + '/' + conf.cnt[conf.dataset_list_idx[pontoon_name]].name;
     var cur_dataset = JSON.parse(JSON.stringify(conf.dataset_list[pontoon_name]));
-    setTimeout(send_dataset, 10000, pontoon_name, data_parent, cur_dataset);
+    send_dataset(pontoon_name, data_parent, cur_dataset);
 }
 
 //이미지 파일 디코딩 하는 함수
@@ -412,7 +412,7 @@ var g_color_index = ['red-edge', 'near-ir', 'red', 'green', 'blue'];
 function start_check_camera_images(pontoon_name, index, ref_ct) {
     check_camera_images(pontoon_name, index, ref_ct, function (code) {
         if(code === 200) {
-            build_dataset(pontoon_name);
+            setTimeout(build_dataset, 10000, pontoon_name);
         }
     });
 }
