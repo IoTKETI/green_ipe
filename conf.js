@@ -35,7 +35,7 @@ conf.sim = 'disable'; // enable / disable
 
 
 // build cse
-cse.host        = '203.253.128.161'; //'59.10.2.16';
+cse.host        = '112.216.155.251' // '203.253.128.161'; //'59.10.2.16';
 cse.port        = '7579';
 cse.name        = 'Mobius';
 cse.id          = '/Mobius2';

@@ -20,7 +20,7 @@ var cbor = require('cbor');
 
 function http_request(path, method, ty, bodyString, callback) {
     if(method == 'delete') {
-        var origin = 'Superman';
+        var origin = 'Sponde' //'Superman';
     }
     else {
         origin = conf.ae.id; //'Sjiho';
